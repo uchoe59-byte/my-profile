@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>최우혁 | 데이터 분석 & AI 기획 포트폴리오</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Pretendard Font -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#2563eb',
+              600: '#1d4ed8',
+              700: '#1e40af',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Pretendard', -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+      body {
+        background: #ffffff !important;
+        font-size: 12px;
+      }
+      .page-break {
+        page-break-before: always;
+      }
+      .shadow-sm, .shadow-md, .shadow-lg {
+        box-shadow: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-[#F8FAFC] text-slate-800 antialiased min-h-screen">
+  
+  <!-- 헤더 / 상단 바 -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 px-6 py-3.5 no-print">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-sky-500 text-white flex items-center justify-center font-bold text-sm shadow-md shadow-blue-500/20">
+          <i data-lucide="sparkles" class="w-4 h-4"></i>
+        </div>
+        <div>
+          <span class="font-bold text-slate-900 text-base tracking-tight">최우혁의 포트폴리오 & 프로필</span>
+          <span class="hidden sm:inline-block ml-2 text-xs text-blue-600 font-medium bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100">데이터 분석 & AI 기획</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="window.print()" class="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-lg transition-all">
+          <i data-lucide="printer" class="w-4 h-4"></i>
+          <span>PDF / 인쇄</span>
+        </button>
+        <a href="mailto:dngur7960@naver.com" class="flex items-center gap-1.5 px-4 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm shadow-blue-500/20 transition-all">
+          <i data-lucide="mail" class="w-4 h-4"></i>
+          <span>이메일 보내기</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 메인 영역 -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-7 items-start">
+      
+      <!-- ================= 좌측 프로필 & 스킬 사이드바 (4 cols) ================= -->
+      <aside class="lg:col-span-4 space-y-6">
+        
+        <!-- 프로필 카드 -->
+        <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 relative overflow-hidden">
+          <div class="h-24 bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500 -mx-6 -mt-6 mb-4"></div>
+          
+          <div class="relative flex flex-col items-center text-center">
+            <!-- 모던 아바타 아이콘 -->
+            <div class="relative w-24 h-24 rounded-2xl border-4 border-white shadow-lg bg-gradient-to-br from-slate-800 to-blue-900 -mt-14 overflow-hidden flex items-center justify-center text-white">
+              <div class="relative flex flex-col items-center justify-center">
+                <i data-lucide="cpu" class="w-9 h-9 text-sky-400"></i>
+                <span class="text-[9px] font-bold text-slate-300 mt-1 uppercase tracking-widest">DATA · AI</span>
+              </div>
+            </div>
+
+            <!-- 이름 & 직무 -->
+            <h1 class="text-2xl font-black text-slate-900 mt-3.5 tracking-tight">최우혁</h1>
+            <p class="text-xs font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100 mt-1">
+              데이터 분석(ADsP) · AI 기획 & 인사이트 도출
+            </p>
+            
+            <div class="flex items-center gap-3 text-xs text-slate-500 mt-2 font-medium">
+              <span class="flex items-center gap-1">
+                <i data-lucide="user" class="w-3.5 h-3.5 text-slate-400"></i>
+                <span>26세</span>
+              </span>
+              <span>·</span>
+              <span class="flex items-center gap-1">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-400"></i>
+                <span>대한민국</span>
+              </span>
+            </div>
+
+            <!-- 자기소개 / 핵심 가치관 -->
+            <p class="text-xs text-slate-700 mt-4 leading-relaxed bg-slate-50/90 p-3.5 rounded-2xl border border-slate-100 text-left w-full font-normal">
+              "정량적 데이터 분석 역량(ADsP)과 최신 생성형 AI 기술을 결합하여, 복잡한 데이터 속에서 핵심 인사이트를 발굴하고 직관적인 콘텐츠와 실질적인 가치를 창출합니다."
+            </p>
+
+            <!-- 연락처 정보 -->
+            <div class="w-full mt-4 space-y-2 text-xs text-left">
+              <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50/60 border border-slate-100">
+                <span class="flex items-center gap-2 text-slate-700">
+                  <i data-lucide="phone" class="w-4 h-4 text-blue-500"></i>
+                  <span class="font-medium">010-5281-8966</span>
+                </span>
+                <button onclick="copyText('010-5281-8966')" class="text-slate-400 hover:text-blue-600 transition-colors p-1" title="전화번호 복사">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+
+              <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50/60 border border-slate-100">
+                <span class="flex items-center gap-2 text-slate-700">
+                  <i data-lucide="mail" class="w-4 h-4 text-indigo-500"></i>
+                  <span class="font-medium">dngur7960@naver.com</span>
+                </span>
+                <button onclick="copyText('dngur7960@naver.com')" class="text-slate-400 hover:text-indigo-600 transition-colors p-1" title="이메일 복사">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 보유 자격증 (Certifications) -->
+        <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+              <span class="p-1.5 bg-blue-100 text-blue-600 rounded-lg"><i data-lucide="badge-check" class="w-4 h-4"></i></span>
+              보유 자격 사항 (Certifications)
+            </h2>
+            <span class="text-[11px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">4종 보유</span>
+          </div>
+
+          <div class="space-y-2.5">
+            <!-- 1. ADsP -->
+            <div class="p-3 bg-gradient-to-r from-blue-50/70 to-indigo-50/70 rounded-2xl border border-blue-200/80 flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <div class="w-2.5 h-2.5 rounded-full bg-blue-600"></div>
+                <div>
+                  <h3 class="text-xs font-bold text-slate-900">ADsP (데이터분석 준전문가)</h3>
+                  <p class="text-[11px] text-slate-500">한국데이터산업진흥원 (데이터 기획 및 분석)</p>
+                </div>
+              </div>
+              <span class="text-[10px] font-semibold bg-blue-600 text-white px-2 py-0.5 rounded-full">데이터 분석</span>
+            </div>
+
+            <!-- 2. 투자자산운용사 -->
+            <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <div class="w-2 h-2 rounded-full bg-slate-400"></div>
+                <div>
+                  <h3 class="text-xs font-bold text-slate-800">투자자산운용사</h3>
+                  <p class="text-[11px] text-slate-500">금융투자협회 (자산 배분 및 포트폴리오 분석)</p>
+                </div>
+              </div>
+              <span class="text-[10px] font-medium bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full">자산운용</span>
+            </div>
+
+            <!-- 3. AFPK -->
+            <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <div class="w-2 h-2 rounded-full bg-slate-400"></div>
+                <div>
+                  <h3 class="text-xs font-bold text-slate-800">AFPK (재무설계사)</h3>
+                  <p class="text-[11px] text-slate-500">한국FPSB (종합 리스크 및 플래닝)</p>
+                </div>
+              </div>
+              <span class="text-[10px] font-medium bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full">플래닝</span>
+            </div>
+
+            <!-- 4. 한국사 2급 -->
+            <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <div class="w-2 h-2 rounded-full bg-slate-400"></div>
+                <div>
+                  <h3 class="text-xs font-bold text-slate-800">한국사능력검정시험 2급</h3>
+                  <p class="text-[11px] text-slate-500">국사편찬위원회</p>
+                </div>
+              </div>
+              <span class="text-[10px] font-medium bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full">기본소양</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 학력 사항 (Education) -->
+        <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80">
+          <h2 class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
+            <span class="p-1.5 bg-slate-100 text-slate-600 rounded-lg"><i data-lucide="graduation-cap" class="w-4 h-4"></i></span>
+            학력 사항 (Education)
+          </h2>
+          <div class="border-l-2 border-blue-500 pl-3.5 py-1">
+            <p class="font-bold text-slate-900 text-xs">울산대학교</p>
+            <p class="text-xs text-slate-600 mt-0.5">식품영양학과 4학년 재학</p>
+          </div>
+        </div>
+
+        <!-- 직무 역량 & 업무 성향 차트 -->
+        <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80">
+          <h2 class="text-sm font-bold text-slate-900 mb-2 flex items-center gap-2">
+            <span class="p-1.5 bg-indigo-100 text-indigo-600 rounded-lg"><i data-lucide="pie-chart" class="w-4 h-4"></i></span>
+            직무 역량 & 업무 성향
+          </h2>
+          <p class="text-[11px] text-slate-500 mb-4">텔링(Telling) 경험 분석 알고리즘 기반</p>
+
+          <div class="grid grid-cols-2 gap-3 items-center">
+            <div class="relative flex flex-col items-center">
+              <div class="w-24 h-24 relative">
+                <canvas id="competencyChart"></canvas>
+              </div>
+              <span class="text-[11px] font-bold text-slate-700 mt-2">직무 역량</span>
+            </div>
+
+            <div class="relative flex flex-col items-center">
+              <div class="w-24 h-24 relative">
+                <canvas id="personalityChart"></canvas>
+              </div>
+              <span class="text-[11px] font-bold text-slate-700 mt-2">업무 성향</span>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100 flex flex-wrap gap-1.5 justify-center">
+            <span class="px-2 py-0.5 text-[10px] font-medium bg-blue-50 text-blue-700 rounded-full">#데이터분석</span>
+            <span class="px-2 py-0.5 text-[10px] font-medium bg-indigo-50 text-indigo-700 rounded-full">#AI기획</span>
+            <span class="px-2 py-0.5 text-[10px] font-medium bg-sky-50 text-sky-700 rounded-full">#창의성</span>
+            <span class="px-2 py-0.5 text-[10px] font-medium bg-emerald-50 text-emerald-700 rounded-full">#추진력</span>
+            <span class="px-2 py-0.5 text-[10px] font-medium bg-purple-50 text-purple-700 rounded-full">#정보시각화</span>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- ================= 우측 주요 경험 & 프로젝트 타임라인 (8 cols) ================= -->
+      <section class="lg:col-span-8 space-y-6">
+        
+        <!-- 상단 하이라이트 배너: 핵심 성과 요약 -->
+        <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600 rounded-3xl p-6 text-white shadow-md shadow-blue-500/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 bg-amber-400 text-slate-950 font-black text-xs rounded-full shadow-sm">
+                🏆 공모전 대상 수상
+              </span>
+              <span class="text-xs text-blue-100 font-medium">캠코 AI 활용 국유재산 공모전 1위</span>
+            </div>
+            <h2 class="text-lg font-bold tracking-tight">"데이터 분석 기반의 통찰과 AI 기술의 융합"</h2>
+            <p class="text-xs text-blue-100">캠코터즈 4개월 연속 최우수 영상 선정 및 공모전 대상 수상을 통한 검증된 기획 역량</p>
+          </div>
+          <div class="flex items-center gap-3 shrink-0 bg-white/10 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-white/20">
+            <div class="text-center">
+              <div class="text-xl font-black text-white">4편 전작</div>
+              <div class="text-[10px] text-blue-200">캠코 공식 유튜브 게시</div>
+            </div>
+            <div class="w-px h-8 bg-white/20"></div>
+            <div class="text-center">
+              <div class="text-xl font-black text-amber-300">대상</div>
+              <div class="text-[10px] text-blue-200">AI 영상 기획 1위</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1. 핵심 경험 및 활동 타임라인 (Timeline & Experience) -->
+        <div class="bg-white rounded-3xl p-6 sm:p-7 shadow-sm border border-slate-200/80">
+          <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+            <div>
+              <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                <span class="p-1.5 bg-blue-100 text-blue-600 rounded-lg"><i data-lucide="sparkles" class="w-4 h-4"></i></span>
+                경험 및 활동 타임라인 (Experience & Projects)
+              </h2>
+              <p class="text-xs text-slate-500 mt-0.5">데이터 분석 및 AI 콘텐츠 기획 기반의 실전 프로젝트</p>
+            </div>
+            <span class="text-xs font-semibold text-slate-400">Total 3 Experiences</span>
+          </div>
+
+          <div class="space-y-7 relative before:absolute before:inset-0 before:left-4 before:w-0.5 before:bg-slate-200">
+            
+            <!-- 경험 1: 캠코 AI 활용 국유재산 공모전 대상 (2026.07) -->
+            <div class="relative flex items-start gap-4">
+              <div class="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center font-bold text-xs ring-4 ring-white shadow-md shadow-amber-500/20 shrink-0 z-10">
+                <i data-lucide="trophy" class="w-4 h-4"></i>
+              </div>
+              
+              <div class="flex-1 bg-gradient-to-br from-amber-50/40 via-white to-slate-50 p-5 rounded-2xl border border-amber-200/70 shadow-sm">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="px-2 py-0.5 text-[10px] font-black bg-amber-500 text-white rounded-md">대상 수상 (1위)</span>
+                    <h3 class="font-bold text-slate-900 text-sm">캠코 AI 활용 국유재산 공모전 - 나라 On 홍보 콘텐츠 총괄 기획</h3>
+                  </div>
+                  <span class="text-xs text-amber-700 font-bold bg-amber-100/70 px-2.5 py-0.5 rounded-full self-start sm:self-auto">2026.07</span>
+                </div>
+
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                  캠코 AI 활용 국유재산 공모전에 <b>개인 참가자</b>로 참가하여 <b>&lt;On하다: 잠들어있던 가치의 재발견&gt;</b>을 주제로 생성형 AI 기술을 전 과정에 융합한 영상 콘텐츠를 기획 및 제작하였습니다.
+                </p>
+
+                <div class="bg-white/90 p-3.5 rounded-xl border border-slate-100 space-y-2 text-xs text-slate-700 mb-3">
+                  <div class="flex items-start gap-2">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5"></i>
+                    <span><b>생성형 AI 파이프라인 설계</b>: AI 기반 스토리보드 기획, 비주얼 에셋 생성 및 편집 툴을 결합하여 1인 제작의 한계를 극복하고 높은 완성도 구현</span>
+                  </div>
+                  <div class="flex items-start gap-2">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5"></i>
+                    <span><b>공공 데이터 및 정책 가치 재해석</b>: 국유재산 활용 데이터를 시각화하고 대중의 공감을 이끌어내는 스토리텔링 구조화</span>
+                  </div>
+                  <div class="flex items-start gap-2">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5"></i>
+                    <span><b>대상 수상 (1위)</b>: 기술 적용의 참신성과 기획의 완성도를 인정받아 공모전 대상(1위) 수상</span>
+                  </div>
+                </div>
+
+                <div class="flex flex-wrap gap-1.5">
+                  <span class="px-2 py-0.5 text-[10px] font-medium bg-amber-100/60 text-amber-800 rounded">#공모전대상</span>
+                  <span class="px-2 py-0.5 text-[10px] font-medium bg-slate-100 text-slate-700 rounded">#생성형AI응용</span>
+                  <span class="px-2 py-0.5 text-[10px] font-medium bg-slate-100 text-slate-700 rounded">#AI콘텐츠기획</span>
+                  <span class="px-2 py-0.5 text-[10px] font-medium bg-slate-100 text-slate-700 rounded">#창의적문제해결</span>
+                  <span class="px-2 py-0.5 text-[10px] font-medium bg-slate-100 text-slate-700 rounded">#추진력</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 경험 2: 캠코터즈 홍보 영상 제작 (4개월 연속 최우수 영상 & 공식 유튜브 업로드 성과 반영) -->
+            <div class="relative flex items-start gap-4">
+              <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs ring-4 ring-white shadow-md shadow-blue-500/20 shrink-0 z-10">
+                <i data-lucide="video" class="w-4 h-4"></i>
+              </div>
+              
+              <div class="flex-1 bg-gradient-to-br from-blue-50/40 via-white to-slate-50 p-5 rounded-2xl border border-blue-200/80 shadow-sm">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="px-2 py-0.5 text-[10px] font-bold bg-blue-600 text-white rounded-md">4개월 연속 최우수</span>
+                    <h3 class="font-bold text-slate-900 text-sm">캠코터즈 - 한국자산관리공사(캠코) 공식 홍보 영상 기획 및 제작</h3>
+                  </div>
+                  <span class="text-xs text-blue-600 font-semibold bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-100 self-start sm:self-auto">2026.09</span>
+                </div>
+
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                  한국자산관리공사 공식 서포터즈인 <b>캠코터즈</b>로 활동하며 캠코의 주요 사업 및 자영업자 지원 정책 데이터를 분석하고, 직관적인 영상 콘텐츠로 기획 및 제작하였습니다.
+                </p>
+
+                <!-- 주요 성과 하이라이트 박스 -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 my-3">
+                  <div class="p-2.5 bg-blue-50/80 rounded-xl border border-blue-100 flex items-center gap-2.5">
+                    <div class="p-1.5 bg-blue-600 text-white rounded-lg"><i data-lucide="award" class="w-4 h-4"></i></div>
+                    <div>
+                      <div class="text-[10px] text-blue-600 font-semibold">성과 지표 1</div>
+                      <div class="text-xs font-bold text-slate-900">4개월 연속 '최우수 영상' 선정</div>
+                    </div>
+                  </div>
+                  <div class="p-2.5 bg-red-50/80 rounded-xl border border-red-100 flex items-center gap-2.5">
+                    <div class="p-1.5 bg-red-600 text-white rounded-lg"><i data-lucide="youtube" class="w-4 h-4"></i></div>
+                    <div>
+                      <div class="text-[10px] text-red-600 font-semibold">성과 지표 2</div>
+                      <div class="text-xs font-bold text-slate-900">제작 4편 전작 공식 유튜브 게시</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bg-white/90 p-3.5 rounded-xl border border-slate-100 space-y-2 text-xs text-slate-700 mb-3">
+                  <div class="flex items-start gap-2">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-blue-500 shrink-0 mt-0.5"></i>
+                    <span><b>활동 기간 4개월 연속 최우수 영상 지정</b>: 매월 기획력, 스토리텔링 및 영상 완성도를 인정받아 4회 연속 최우수 콘텐츠로 선정</span>
+                  </div>
+                  <div class="flex items-start gap-2">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-blue-500 shrink-0 mt-0.5"></i>
+                    <span><b>제작한 4작의 영상 전체 캠코 공식 유튜브 채널 업로드</b>: 서포터즈 제작물 중 대외 활용 가치를 인정받아 제작한 4편 모두 한국자산관리공사 공식 유튜브 채널에 정식 게시</span>
+                  </div>
+                  <div class="flex items-start gap-2">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-blue-500 shrink-0 mt-0.5"></i>
+                    <span><b>복잡한 정책 정보의 구조화</b>: 코로나 시기 소상공인·자영업자 지원 정책 데이터를 대중의 눈높이에 맞춰 직관적인 스토리와 영상으로 시각화</span>
+                  </div>
+                </div>
+
+                <div class="flex flex-wrap gap-1.5">
+                  <span class="px-2 py-0.5 text-[10px] font-medium bg-blue-100 text-blue-800 rounded">#4개월연속최우수</span>
+                  <span class="px-2 py-0.5 text-[10px] font-medium bg-red-100 text-red-700 rounded">#캠코공식유튜브게시</span>
+                  <span class="px-2 py-0.5 text-[10px] font-medium bg-slate-100 text-slate-700 rounded">#정책홍보</span>
+                  <span class="px-2 py-0.5 text-[10px] font-medium bg-slate-100 text-slate-700 rounded">#데이터시각화</span>
+                  <span class="px-2 py-0.5 text-[10px] font-medium bg-slate-100 text-slate-700 rounded">#영상기획</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 경험 3: IF-PBL 포트폴리오 분석 및 솔루션 도출 (2024.09~12) -->
+            <div class="relative flex items-start gap-4">
+              <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xs ring-4 ring-white shadow-md shadow-indigo-500/20 shrink-0 z-10">
+                <i data-lucide="trending-up" class="w-4 h-4"></i>
+              </div>
+              
+              <div class="flex-1 bg-slate-50/80 p-5 rounded-2xl border border-slate-200/80">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="px-2 py-0.5 text-[10px] font-bold bg-indigo-100 text-indigo-700 rounded-md">분석 프로젝트 (PBL)</span>
+                    <h3 class="font-bold text-slate-900 text-sm">IF-PBL 과정 - 정량적 데이터 기반 포트폴리오 분석 및 솔루션 재설계</h3>
+                  </div>
+                  <span class="text-xs text-indigo-600 font-semibold bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-100 self-start sm:self-auto">2024.09 - 2024.12</span>
+                </div>
+
+                <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                  실제 사용자 데이터를 기반으로 위험 선호도 및 기대수익률 지표를 정량적으로 모델링하고, 시뮬레이션을 통해 최적의 포트폴리오 배분 솔루션을 도출하였습니다.
+                </p>
+
+                <div class="bg-white p-3.5 rounded-xl border border-slate-100 space-y-2 text-xs text-slate-700 mb-3">
+                  <div class="flex items-start gap-2">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-indigo-500 shrink-0 mt-0.5"></i>
+                    <span><b>정량 데이터 마이닝 및 리스크 분석</b>: 고객의 현금 흐름 및 투자 패턴 데이터를 수집/분석하여 정량적 리스크 프로파일 도출</span>
+                  </div>
+                  <div class="flex items-start gap-2">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-indigo-500 shrink-0 mt-0.5"></i>
+                    <span><b>데이터 기반 최적화 솔루션 제안</b>: 통계적 분석 지표를 활용하여 변동성을 최소화하는 최적 배분 모델 수립</span>
+                  </div>
+                  <div class="flex items-start gap-2">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-indigo-500 shrink-0 mt-0.5"></i>
+                    <span><b>효과적인 데이터 시각화 & 프레젠테이션</b>: 분석 결과를 한눈에 파악할 수 있는 대시보드형 시각화 리포트 구성</span>
+                  </div>
+                </div>
+
+                <div class="flex flex-wrap gap-1.5">
+                  <span class="px-2 py-0.5 text-[10px] font-medium bg-indigo-50 text-indigo-700 rounded">#데이터분석</span>
+                  <span class="px-2 py-0.5 text-[10px] font-medium bg-slate-100 text-slate-700 rounded">#지표설계</span>
+                  <span class="px-2 py-0.5 text-[10px] font-medium bg-slate-100 text-slate-700 rounded">#데이터시각화</span>
+                  <span class="px-2 py-0.5 text-[10px] font-medium bg-slate-100 text-slate-700 rounded">#프레젠테이션</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 2. 직무별 핵심 강점 & 차별화 포인트 (데이터 & AI 역량 중심) -->
+        <div class="bg-white rounded-3xl p-6 sm:p-7 shadow-sm border border-slate-200/80">
+          <h2 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+            <span class="p-1.5 bg-emerald-100 text-emerald-600 rounded-lg"><i data-lucide="check-check" class="w-4 h-4"></i></span>
+            핵심 역량 요약 (Core Competencies)
+          </h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            
+            <!-- 역량 1: 데이터 분석 -->
+            <div class="p-4 rounded-2xl bg-blue-50/50 border border-blue-100 flex flex-col justify-between">
+              <div>
+                <div class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center mb-3">
+                  <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+                </div>
+                <h3 class="font-bold text-slate-900 text-xs mb-1">정량적 데이터 분석 (ADsP)</h3>
+                <p class="text-[11px] text-slate-600 leading-relaxed">
+                  <b>ADsP 자격</b>을 바탕으로 데이터를 체계적으로 수집·분석하고, 숫자에 기반한 논리적 인사이트를 도출합니다.
+                </p>
+              </div>
+            </div>
+
+            <!-- 역량 2: AI 융합 및 기획 -->
+            <div class="p-4 rounded-2xl bg-indigo-50/50 border border-indigo-100 flex flex-col justify-between">
+              <div>
+                <div class="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center mb-3">
+                  <i data-lucide="bot" class="w-4 h-4"></i>
+                </div>
+                <h3 class="font-bold text-slate-900 text-xs mb-1">최신 생성형 AI 응용 & 기획</h3>
+                <p class="text-[11px] text-slate-600 leading-relaxed">
+                  생성형 AI 기술을 실무에 적극 도입하여 <b>공모전 대상(1위)</b>을 수상한 검증된 기획력을 보유하고 있습니다.
+                </p>
+              </div>
+            </div>
+
+            <!-- 역량 3: 데이터 시각화 & 콘텐츠 성과 -->
+            <div class="p-4 rounded-2xl bg-sky-50/50 border border-sky-100 flex flex-col justify-between">
+              <div>
+                <div class="w-8 h-8 rounded-xl bg-sky-600 text-white flex items-center justify-center mb-3">
+                  <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                </div>
+                <h3 class="font-bold text-slate-900 text-xs mb-1">콘텐츠 기획 & 시각화 성과</h3>
+                <p class="text-[11px] text-slate-600 leading-relaxed">
+                  <b>캠코터즈 4개월 연속 최우수 영상</b> 선정 및 <b>공식 유튜브 채널 4편 전작 게시</b>를 이끌어낸 높은 퀄리티의 전달력
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="mt-12 py-6 border-t border-slate-200 bg-white text-center text-xs text-slate-400 no-print">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <p>© 2026 최우혁 (Choi Woo-Hyuk). All rights reserved.</p>
+      <p class="flex items-center gap-1">
+        <span>Data & AI Experience Portfolio</span>
+        <span>·</span>
+        <span class="text-slate-600 font-medium">dngur7960@naver.com</span>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // 아이콘 렌더링
+    lucide.createIcons();
+
+    // 텍스트 클립보드 복사
+    function copyText(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('복사되었습니다: ' + text);
+      });
+    }
+
+    // 도넛 차트 렌더링 (데이터 & AI 역량 지표)
+    window.addEventListener('DOMContentLoaded', () => {
+      // 1. 직무 역량 차트
+      const ctx1 = document.getElementById('competencyChart').getContext('2d');
+      new Chart(ctx1, {
+        type: 'doughnut',
+        data: {
+          labels: ['데이터분석/해석', 'AI응용/기획', '정보시각화', '기타'],
+          datasets: [{
+            data: [40, 30, 20, 10],
+            backgroundColor: ['#2563eb', '#6366f1', '#38bdf8', '#cbd5e1'],
+            borderWidth: 2,
+            borderColor: '#ffffff'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return context.label + ': ' + context.raw + '%';
+                }
+              }
+            }
+          },
+          cutout: '70%'
+        }
+      });
+
+      // 2. 업무 성향 차트
+      const ctx2 = document.getElementById('personalityChart').getContext('2d');
+      new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+          labels: ['분석력/논리', '창의성/AI', '추진력/실행', '정확성'],
+          datasets: [{
+            data: [35, 30, 20, 15],
+            backgroundColor: ['#4f46e5', '#38bdf8', '#f59e0b', '#10b981'],
+            borderWidth: 2,
+            borderColor: '#ffffff'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return context.label + ': ' + context.raw + '%';
+                }
+              }
+            }
+          },
+          cutout: '70%'
+        }
+      });
+    });
+  </script>
+</body>
+</html>
