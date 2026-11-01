@@ -3,8 +3,6 @@ import { Header } from './components/Header';
 import { ProfileSidebar } from './components/ProfileSidebar';
 import { HighlightBanner } from './components/HighlightBanner';
 import { Timeline } from './components/Timeline';
-import { CoreStrengths } from './components/CoreStrengths';
-import { GuestbookSection } from './components/GuestbookSection';
 import { Footer } from './components/Footer';
 import { AuthModal } from './components/AuthModal';
 
@@ -52,8 +50,6 @@ export const App: React.FC = () => {
           <section className="lg:col-span-8 space-y-6">
             <HighlightBanner />
             <Timeline />
-            <CoreStrengths />
-            <GuestbookSection onOpenAuth={() => setIsAuthModalOpen(true)} />
           </section>
         </div>
       </main>

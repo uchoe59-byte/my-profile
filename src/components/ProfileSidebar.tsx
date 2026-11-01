@@ -9,15 +9,13 @@ import {
   Check,
   BadgeCheck,
   GraduationCap,
-  PieChart,
 } from 'lucide-react';
-import { CompetencyChart } from './CompetencyChart';
 
 interface ProfileSidebarProps {
-  darkMode: boolean;
+  darkMode?: boolean;
 }
 
-export const ProfileSidebar: React.FC<ProfileSidebarProps> = ({ darkMode }) => {
+export const ProfileSidebar: React.FC<ProfileSidebarProps> = () => {
   const [copiedPhone, setCopiedPhone] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
 
@@ -48,11 +46,8 @@ export const ProfileSidebar: React.FC<ProfileSidebarProps> = ({ darkMode }) => {
             </div>
           </div>
 
-          {/* 이름 & 직무 */}
+          {/* 이름 */}
           <h1 className="text-2xl font-black text-slate-900 dark:text-white mt-3.5 tracking-tight">최우혁</h1>
-          <p className="text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-2.5 py-1 rounded-full border border-blue-100 dark:border-blue-900/60 mt-1">
-            데이터 분석(ADsP) · AI 기획 &amp; 인사이트 도출
-          </p>
 
           <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mt-2 font-medium">
             <span className="flex items-center gap-1">
@@ -186,37 +181,6 @@ export const ProfileSidebar: React.FC<ProfileSidebarProps> = ({ darkMode }) => {
         <div className="border-l-2 border-blue-500 pl-3.5 py-1">
           <p className="font-bold text-slate-900 dark:text-white text-xs">울산대학교</p>
           <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">식품영양학과 4학년 재학</p>
-        </div>
-      </div>
-
-      {/* 직무 역량 & 업무 성향 차트 */}
-      <div className="bg-white dark:bg-[#131B2E] rounded-3xl p-6 shadow-sm border border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300">
-        <h2 className="text-sm font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
-          <span className="p-1.5 bg-indigo-100 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 rounded-lg">
-            <PieChart className="w-4 h-4" />
-          </span>
-          직무 역량 &amp; 업무 성향
-        </h2>
-        <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-4">텔링(Telling) 경험 분석 알고리즘 기반</p>
-
-        <CompetencyChart darkMode={darkMode} />
-
-        <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-wrap gap-1.5 justify-center">
-          <span className="px-2 py-0.5 text-[10px] font-medium bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 rounded-full">
-            #데이터분석
-          </span>
-          <span className="px-2 py-0.5 text-[10px] font-medium bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 rounded-full">
-            #AI기획
-          </span>
-          <span className="px-2 py-0.5 text-[10px] font-medium bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 rounded-full">
-            #창의성
-          </span>
-          <span className="px-2 py-0.5 text-[10px] font-medium bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 rounded-full">
-            #추진력
-          </span>
-          <span className="px-2 py-0.5 text-[10px] font-medium bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 rounded-full">
-            #정보시각화
-          </span>
         </div>
       </div>
     </aside>
