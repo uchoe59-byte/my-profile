@@ -61,11 +61,6 @@ export const ProfileSidebar: React.FC<ProfileSidebarProps> = () => {
             </span>
           </div>
 
-          {/* 자기소개 / 핵심 가치관 */}
-          <p className="text-xs text-slate-700 dark:text-slate-200 mt-4 leading-relaxed bg-slate-50/90 dark:bg-slate-800/60 p-3.5 rounded-2xl border border-slate-100 dark:border-slate-800 text-left w-full font-normal">
-            &quot;정량적 데이터 분석 역량(ADsP)과 최신 생성형 AI 기술을 결합하여, 복잡한 데이터 속에서 핵심 인사이트를 발굴하고 직관적인 콘텐츠와 실질적인 가치를 창출합니다.&quot;
-          </p>
-
           {/* 연락처 정보 */}
           <div className="w-full mt-4 space-y-2 text-xs text-left">
             <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50/60 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800">

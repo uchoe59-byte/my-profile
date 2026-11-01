@@ -14,6 +14,14 @@ import {
 
 export const Timeline: React.FC = () => {
   const [isPlayingVideo, setIsPlayingVideo] = useState(false);
+  const [playingKamcoVideo, setPlayingKamcoVideo] = useState<string | null>(null);
+
+  const kamcoVideos = [
+    { id: 'aXK3B0ijzIo', label: '1' },
+    { id: 'jvZGS8gVUYU', label: '2' },
+    { id: 'UGqA1QGIzZQ', label: '3' },
+    { id: 'tCC0UgH7h6g', label: '4' },
+  ];
 
   return (
     <div className="bg-white dark:bg-[#131B2E] rounded-3xl p-6 sm:p-7 shadow-sm border border-slate-200/80 dark:border-slate-800/80 transition-colors duration-300">
@@ -43,7 +51,7 @@ export const Timeline: React.FC = () => {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="px-2 py-0.5 text-[10px] font-black bg-amber-500 text-white rounded-md">
-                  대상 수상 (1위)
+                  대상 수상
                 </span>
                 <h3 className="font-bold text-slate-900 dark:text-white text-sm">
                   캠코 AI 활용 국유재산 공모전 - 나라 On 홍보 콘텐츠 총괄 기획
@@ -78,7 +86,7 @@ export const Timeline: React.FC = () => {
               <div className="flex items-start gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5" />
                 <span>
-                  <b>대상 수상 (1위)</b>: 기술 적용의 참신성과 기획의 완성도를 인정받아 공모전 대상(1위) 수상
+                  <b>대상 수상</b>: 기술 적용의 참신성과 기획의 완성도를 인정받아 공모전 대상 수상
                 </span>
               </div>
             </div>
@@ -184,7 +192,7 @@ export const Timeline: React.FC = () => {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="px-2 py-0.5 text-[10px] font-bold bg-blue-600 text-white rounded-md">
-                  4개월 연속 최우수
+                  서포터즈 대상 수상
                 </span>
                 <h3 className="font-bold text-slate-900 dark:text-white text-sm">
                   캠코터즈 - 한국자산관리공사(캠코) 공식 홍보 영상 기획 및 제작
@@ -207,7 +215,7 @@ export const Timeline: React.FC = () => {
                 </div>
                 <div>
                   <div className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold">성과 지표 1</div>
-                  <div className="text-xs font-bold text-slate-900 dark:text-white">4개월 연속 &apos;최우수 영상&apos; 선정</div>
+                  <div className="text-xs font-bold text-slate-900 dark:text-white">서포터즈 대상 수상</div>
                 </div>
               </div>
               <div className="p-2.5 bg-red-50/80 dark:bg-red-950/40 rounded-xl border border-red-100 dark:border-red-900/40 flex items-center gap-2.5">
@@ -225,8 +233,8 @@ export const Timeline: React.FC = () => {
               <div className="flex items-start gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-blue-500 shrink-0 mt-0.5" />
                 <span>
-                  <b>활동 기간 4개월 연속 최우수 영상 지정</b>: 매월 기획력, 스토리텔링 및 영상 완성도를 인정받아
-                  4회 연속 최우수 콘텐츠로 선정
+                  <b>캠코터즈 서포터즈 대상 수상</b>: 전 활동 기간 동안 기획력과 콘텐츠 완성도를 인정받아
+                  서포터즈 대상 수상
                 </span>
               </div>
               <div className="flex items-start gap-2">
@@ -245,9 +253,73 @@ export const Timeline: React.FC = () => {
               </div>
             </div>
 
+            {/* 캠코터즈 최우수 롱폼 4종 영상 그리드 (1 2 3 4) */}
+            <div className="my-3.5">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                  <Youtube className="w-3.5 h-3.5 text-red-500" />
+                  캠코 공식 유튜브 게시 영상
+                </span>
+                <span className="text-[10px] text-slate-400 font-medium">4편 전작</span>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                {kamcoVideos.map((video) => (
+                  <div
+                    key={video.id}
+                    className="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-950 shadow-sm group hover:border-red-500/60 dark:hover:border-red-500/60 transition-all duration-200 flex flex-col"
+                  >
+                    <div className="relative aspect-video w-full bg-slate-900 overflow-hidden">
+                      {playingKamcoVideo === video.id ? (
+                        <iframe
+                          className="w-full h-full"
+                          src={`https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0`}
+                          title={`캠코터즈 ${video.label} 영상`}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowFullScreen
+                        />
+                      ) : (
+                        <div
+                          onClick={() => setPlayingKamcoVideo(video.id)}
+                          className="relative w-full h-full cursor-pointer group"
+                        >
+                          <img
+                            src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
+                            alt={`캠코터즈 ${video.label}`}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200 opacity-90"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-between p-1.5 z-10">
+                            <span className="px-1.5 py-0.5 bg-blue-600/90 text-white text-[9px] font-black rounded w-fit shadow">
+                              {video.label}
+                            </span>
+                          </div>
+                          <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+                            <div className="w-8 h-8 rounded-full bg-red-600/90 text-white flex items-center justify-center shadow-md group-hover:scale-110 group-hover:bg-red-500 transition-all">
+                              <Play className="w-3.5 h-3.5 fill-white ml-0.5" />
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-1.5 bg-slate-900 border-t border-slate-800 flex items-center justify-between text-[10px]">
+                      <span className="font-bold text-slate-200">{video.label}</span>
+                      <a
+                        href={`https://youtu.be/${video.id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-red-400 hover:text-red-300 flex items-center gap-0.5 shrink-0"
+                        title="YouTube에서 열기"
+                      >
+                        <ExternalLink className="w-2.5 h-2.5" />
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             <div className="flex flex-wrap gap-1.5">
               <span className="px-2 py-0.5 text-[10px] font-medium bg-blue-100 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 rounded border border-blue-200/50 dark:border-blue-900/40">
-                #4개월연속최우수
+                #서포터즈대상수상
               </span>
               <span className="px-2 py-0.5 text-[10px] font-medium bg-red-100 dark:bg-red-950/60 text-red-700 dark:text-red-300 rounded border border-red-200/50 dark:border-red-900/40">
                 #캠코공식유튜브게시

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { ProfileSidebar } from './components/ProfileSidebar';
-import { HighlightBanner } from './components/HighlightBanner';
 import { Timeline } from './components/Timeline';
 import { Footer } from './components/Footer';
 import { AuthModal } from './components/AuthModal';
@@ -48,7 +47,6 @@ export const App: React.FC = () => {
 
           {/* 우측 메인 섹션 (8 cols) */}
           <section className="lg:col-span-8 space-y-6">
-            <HighlightBanner />
             <Timeline />
           </section>
         </div>
