@@ -10,8 +10,11 @@ import {
 import { auth, googleProvider, isFirebaseConfigured } from '../firebase/config';
 import { UserProfile } from '../types';
 
+export const ADMIN_EMAIL = 'uchoe59@gmail.com';
+
 interface AuthContextType {
   currentUser: UserProfile | null;
+  isOwner: boolean;
   loading: boolean;
   loginWithEmail: (email: string, pass: string) => Promise<void>;
   signupWithEmail: (email: string, pass: string, name: string) => Promise<void>;
@@ -107,11 +110,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (isFirebaseConfigured && auth && googleProvider) {
       await signInWithPopup(auth, googleProvider);
     } else {
-      // Local Mock Google Login
+      // Local Mock Google Login (최우혁 본인 계정 자동 인증)
       const user: UserProfile = {
-        uid: 'google_' + Date.now(),
-        email: 'google_user@example.com',
-        displayName: '구글 간편 사용자',
+        uid: 'google_uchoe59',
+        email: ADMIN_EMAIL,
+        displayName: '최우혁 (본인 인증)',
       };
       localStorage.setItem('profile_user_session', JSON.stringify(user));
       setCurrentUser(user);
@@ -137,10 +140,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setCurrentUser(null);
   };
 
+  const isOwner = Boolean(
+    currentUser?.email && currentUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()
+  );
+
   return (
     <AuthContext.Provider
       value={{
         currentUser,
+        isOwner,
         loading,
         loginWithEmail,
         signupWithEmail,

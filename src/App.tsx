@@ -43,7 +43,10 @@ export const App: React.FC = () => {
       <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 items-start">
           {/* 좌측 사이드바 (4 cols) */}
-          <ProfileSidebar darkMode={darkMode} />
+          <ProfileSidebar
+            darkMode={darkMode}
+            onOpenAuth={() => setIsAuthModalOpen(true)}
+          />
 
           {/* 우측 메인 섹션 (8 cols) */}
           <section className="lg:col-span-8 space-y-6">

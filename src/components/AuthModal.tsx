@@ -79,7 +79,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             {isSignUp ? '계정 생성' : '포트폴리오 인증 로그인'}
           </h3>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            방명록 작성, 채용 문의 및 권한 확인을 위해 로그인하세요.
+            자격증 원본 합격증 열람 및 본인 인증을 위해 로그인하세요.
           </p>
         </div>
 
@@ -120,7 +120,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="example@domain.com"
+                placeholder="uchoe59@gmail.com"
                 className="w-full text-xs pl-9 pr-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
@@ -158,7 +158,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             <div className="w-full border-t border-slate-200 dark:border-slate-700"></div>
           </div>
           <span className="relative px-2 bg-white dark:bg-[#131B2E] text-[10px] font-semibold text-slate-400">
-            또는 간편하게
+            또는 원클릭 인증
           </span>
         </div>
 
@@ -166,7 +166,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           <button
             type="button"
             onClick={handleGoogle}
-            className="w-full py-2 px-3 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 flex items-center justify-center gap-2 transition-colors"
+            className="w-full py-2.5 px-3 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl text-xs font-bold text-slate-800 dark:text-slate-100 flex items-center justify-center gap-2 transition-colors shadow-sm"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24">
               <path
@@ -186,8 +186,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                 d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
               />
             </svg>
-            <span>Google 계정으로 계속</span>
+            <span>Google 본인 인증 로그인 (uchoe59@gmail.com)</span>
           </button>
+
 
           <button
             type="button"
