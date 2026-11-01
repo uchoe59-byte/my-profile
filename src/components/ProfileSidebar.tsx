@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Cpu,
   User,
   MapPin,
   Phone,
@@ -100,12 +99,13 @@ export const ProfileSidebar: React.FC<ProfileSidebarProps> = ({ onOpenAuth }) =>
         <div className="h-24 bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500 -mx-6 -mt-6 mb-4"></div>
 
         <div className="relative flex flex-col items-center text-center">
-          {/* 아바타 아이콘 */}
-          <div className="relative w-24 h-24 rounded-2xl border-4 border-white dark:border-slate-800 shadow-lg bg-gradient-to-br from-slate-800 to-blue-900 -mt-14 overflow-hidden flex items-center justify-center text-white">
-            <div className="relative flex flex-col items-center justify-center">
-              <Cpu className="w-9 h-9 text-sky-400" />
-              <span className="text-[9px] font-bold text-slate-300 mt-1 uppercase tracking-widest">DATA · AI</span>
-            </div>
+          {/* 메인 프로필 사진 */}
+          <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-2xl sm:rounded-3xl border-4 border-white dark:border-slate-800 shadow-xl bg-slate-100 dark:bg-slate-800 -mt-16 overflow-hidden flex items-center justify-center">
+            <img
+              src="/profile.png"
+              alt="최우혁"
+              className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
+            />
           </div>
 
           {/* 이름 */}
