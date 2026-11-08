@@ -90,7 +90,7 @@ export const Header: React.FC<HeaderProps> = ({ darkMode, onToggleTheme, onOpenA
               className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-800 dark:text-white bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/80 border border-indigo-200/80 dark:border-indigo-800/60 rounded-lg transition-all"
             >
               <LogIn className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-              <span>로그인</span>
+              <span>본인 인증</span>
             </button>
           )}
         </div>

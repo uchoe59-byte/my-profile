@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Lock, Mail, User, ShieldCheck, Sparkles } from 'lucide-react';
+import { X, Lock, Mail, ShieldCheck } from 'lucide-react';
 import { useAuth, GOOGLE_CLIENT_ID, parseJwt, ADMIN_EMAIL } from '../context/AuthContext';
 
 interface AuthModalProps {
@@ -8,11 +8,9 @@ interface AuthModalProps {
 }
 
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
-  const { loginWithEmail, signupWithEmail, loginWithGoogleCredential, loginAsGuest } = useAuth();
-  const [isSignUp, setIsSignUp] = useState(false);
-  const [email, setEmail] = useState('');
+  const { loginWithEmail, loginWithGoogleCredential } = useAuth();
+  const [email, setEmail] = useState(ADMIN_EMAIL);
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const googleBtnRef = useRef<HTMLDivElement>(null);
@@ -79,31 +77,18 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     setLoading(true);
 
     try {
-      if (isSignUp) {
-        await signupWithEmail(email, password, name);
-      } else {
-        await loginWithEmail(email, password);
-      }
+      await loginWithEmail(email, password);
       onClose();
     } catch (err: any) {
       console.error(err);
       if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
-        setError('이메일 또는 비밀번호가 일치하지 않습니다.');
-      } else if (err.code === 'auth/email-already-in-use') {
-        setError('이미 가입된 이메일 주소입니다.');
-      } else if (err.code === 'auth/weak-password') {
-        setError('비밀번호는 최소 6자리 이상이어야 합니다.');
+        setError('비밀번호가 일치하지 않습니다.');
       } else {
         setError(err.message || '인증 처리 중 오류가 발생했습니다.');
       }
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleGuest = () => {
-    loginAsGuest();
-    onClose();
   };
 
   return (
@@ -121,10 +106,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             <ShieldCheck className="w-6 h-6" />
           </div>
           <h3 className="text-lg font-black text-slate-900 dark:text-white">
-            {isSignUp ? '계정 생성' : '포트폴리오 인증 로그인'}
+            최우혁 본인 인증
           </h3>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            자격증 원본 합격증 열람 및 본인 인증을 위해 로그인하세요.
+            자격증 합격증 및 원본 서류 열람을 위한 본인 확인입니다.
           </p>
         </div>
 
@@ -134,11 +119,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           </div>
         )}
 
-        {/* 실제 공식 Google 로그인 연동 버튼 */}
+        {/* 공식 Google 로그인 버튼 */}
         <div className="flex flex-col items-center justify-center my-3">
           <div ref={googleBtnRef} className="min-h-[44px] flex items-center justify-center w-full"></div>
           <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1.5 text-center">
-            {ADMIN_EMAIL} 계정 로그인 시 합격증 원본 즉시 열람 가능
+            {ADMIN_EMAIL} 구글 계정으로 로그인 시 즉시 인증
           </p>
         </div>
 
@@ -147,45 +132,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             <div className="w-full border-t border-slate-200 dark:border-slate-700"></div>
           </div>
           <span className="relative px-2 bg-white dark:bg-[#131B2E] text-[10px] font-semibold text-slate-400">
-            또는 이메일 / 비밀번호로 로그인
+            또는 본인 비밀번호로 로그인
           </span>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-3">
-          {isSignUp && (
-            <div>
-              <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1">
-                이름 / 닉네임
-              </label>
-              <div className="relative">
-                <User className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
-                <input
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="홍길동"
-                  className="w-full text-xs pl-9 pr-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-            </div>
-          )}
-
           <div>
-            <div className="flex items-center justify-between mb-1">
-              <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300">
-                이메일 주소
-              </label>
-              {!isSignUp && (
-                <button
-                  type="button"
-                  onClick={() => setEmail(ADMIN_EMAIL)}
-                  className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold hover:underline"
-                >
-                  본인 계정 입력
-                </button>
-              )}
-            </div>
+            <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1">
+              관리자 계정
+            </label>
             <div className="relative">
               <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
               <input
@@ -208,10 +163,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <input
                 type="password"
                 required
-                minLength={4}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder="비밀번호 입력"
                 className="w-full text-xs pl-9 pr-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
@@ -222,33 +176,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             disabled={loading}
             className="w-full py-2.5 mt-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow-md shadow-blue-500/20 transition-all disabled:opacity-50"
           >
-            {loading ? '처리 중...' : isSignUp ? '회원가입 완료' : '이메일로 로그인'}
+            {loading ? '인증 확인 중...' : '비밀번호로 본인 인증'}
           </button>
         </form>
-
-        <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800">
-          <button
-            type="button"
-            onClick={handleGuest}
-            className="w-full py-2 px-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 flex items-center justify-center gap-1.5 transition-colors"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-            <span>방문자 게스트 입장 (서류 열람 제외)</span>
-          </button>
-        </div>
-
-        <div className="mt-4 text-center">
-          <button
-            type="button"
-            onClick={() => {
-              setIsSignUp(!isSignUp);
-              setError('');
-            }}
-            className="text-xs text-blue-600 dark:text-blue-400 font-semibold hover:underline"
-          >
-            {isSignUp ? '이미 계정이 있으신가요? 로그인' : '계정이 없으신가요? 무료 회원가입'}
-          </button>
-        </div>
       </div>
     </div>
   );
