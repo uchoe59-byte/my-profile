@@ -38,6 +38,7 @@ interface ScheduleCalendarProps {
 
 const STORAGE_EVENTS_KEY = 'profile_owner_schedules';
 const STORAGE_POOL_KEY = 'profile_owner_pool_items';
+const STORAGE_MONTHLY_POOL_KEY = 'profile_owner_monthly_pools';
 
 const INITIAL_SAMPLE_EVENTS: ScheduleEvent[] = [
   {
@@ -58,32 +59,34 @@ const INITIAL_SAMPLE_EVENTS: ScheduleEvent[] = [
   },
 ];
 
-const INITIAL_POOL_ITEMS: PoolItem[] = [
-  {
-    id: 'pool-1',
-    title: '캠코 AI 면접 마무리',
-    description: '공모전 및 서포터즈 성과 정리',
-    priority: 'red',
-  },
-  {
-    id: 'pool-2',
-    title: '데이터 분석 프로젝트 기획',
-    description: '신규 분석 파이프라인 설계',
-    priority: 'blue',
-  },
-  {
-    id: 'pool-3',
-    title: 'ADsP 자격증 복습',
-    description: '데이터 모델링 및 분석 기법 정리',
-    priority: 'green',
-  },
-  {
-    id: 'pool-4',
-    title: '포트폴리오 업데이트',
-    description: '신규 프로젝트 추가 및 배포',
-    priority: 'blue',
-  },
-];
+const INITIAL_MONTHLY_POOLS: Record<string, PoolItem[]> = {
+  '2026-11': [
+    {
+      id: 'pool-1',
+      title: '캠코 AI 면접 마무리',
+      description: '공모전 및 서포터즈 성과 정리',
+      priority: 'red',
+    },
+    {
+      id: 'pool-2',
+      title: '데이터 분석 프로젝트 기획',
+      description: '신규 분석 파이프라인 설계',
+      priority: 'blue',
+    },
+    {
+      id: 'pool-3',
+      title: 'ADsP 자격증 복습',
+      description: '데이터 모델링 및 분석 기법 정리',
+      priority: 'green',
+    },
+    {
+      id: 'pool-4',
+      title: '포트폴리오 업데이트',
+      description: '신규 프로젝트 추가 및 배포',
+      priority: 'blue',
+    },
+  ],
+};
 
 export const ScheduleCalendar: React.FC<ScheduleCalendarProps> = ({ onOpenAuth }) => {
   const { isOwner } = useAuth();
@@ -114,20 +117,32 @@ export const ScheduleCalendar: React.FC<ScheduleCalendarProps> = ({ onOpenAuth }
     return INITIAL_SAMPLE_EVENTS;
   });
 
-  // 하단 드래그용 "목록" 풀 아이템 상태
-  const [poolItems, setPoolItems] = useState<PoolItem[]>(() => {
+  // 하단 드래그용 "목록" 월별 아이템 상태 (달마다 새로 갱신/관리)
+  const [monthlyPools, setMonthlyPools] = useState<Record<string, PoolItem[]>>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem(STORAGE_POOL_KEY);
+      const saved = localStorage.getItem(STORAGE_MONTHLY_POOL_KEY);
       if (saved) {
         try {
           return JSON.parse(saved);
         } catch {
-          return INITIAL_POOL_ITEMS;
+          // ignore
+        }
+      }
+      const legacy = localStorage.getItem(STORAGE_POOL_KEY);
+      if (legacy) {
+        try {
+          return { '2026-11': JSON.parse(legacy) };
+        } catch {
+          // ignore
         }
       }
     }
-    return INITIAL_POOL_ITEMS;
+    return INITIAL_MONTHLY_POOLS;
   });
+
+  // 현재 보고 있는 연-월 키 (예: "2026-11")
+  const currentMonthKey = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}`;
+  const currentPoolItems = monthlyPools[currentMonthKey] || [];
 
   // 드래그 중인 날짜 셀 하이라이트 상태
   const [dragOverDate, setDragOverDate] = useState<string | null>(null);
@@ -152,8 +167,8 @@ export const ScheduleCalendar: React.FC<ScheduleCalendarProps> = ({ onOpenAuth }
   }, [events]);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_POOL_KEY, JSON.stringify(poolItems));
-  }, [poolItems]);
+    localStorage.setItem(STORAGE_MONTHLY_POOL_KEY, JSON.stringify(monthlyPools));
+  }, [monthlyPools]);
 
   // 이전 달 / 다음 달 이동
   const handlePrevMonth = () => {
@@ -229,18 +244,23 @@ export const ScheduleCalendar: React.FC<ScheduleCalendarProps> = ({ onOpenAuth }
       };
       setEvents((prev) => [...prev, newEvent]);
 
-      // 목록에도 중복되지 않으면 자동 추가
-      setPoolItems((prev) => {
-        if (prev.some((p) => p.title === newEvent.title)) return prev;
-        return [
-          {
-            id: 'pool_' + Date.now(),
-            title: newEvent.title,
-            description: newEvent.description,
-            priority: newEvent.priority,
-          },
+      // 해당 월의 목록에도 중복되지 않으면 자동 추가
+      const eventMonthKey = formDate.substring(0, 7);
+      setMonthlyPools((prev) => {
+        const monthList = prev[eventMonthKey] || [];
+        if (monthList.some((p) => p.title === newEvent.title)) return prev;
+        return {
           ...prev,
-        ];
+          [eventMonthKey]: [
+            {
+              id: 'pool_' + Date.now(),
+              title: newEvent.title,
+              description: newEvent.description,
+              priority: newEvent.priority,
+            },
+            ...monthList,
+          ],
+        };
       });
     }
     setIsModalOpen(false);
@@ -254,7 +274,7 @@ export const ScheduleCalendar: React.FC<ScheduleCalendarProps> = ({ onOpenAuth }
     }
   };
 
-  // 목록에 새 항목 등록
+  // 목록에 새 항목 등록 (현재 선택된 월에 등록)
   const handleAddPoolItem = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newPoolTitle.trim()) return;
@@ -265,7 +285,10 @@ export const ScheduleCalendar: React.FC<ScheduleCalendarProps> = ({ onOpenAuth }
       description: newPoolDesc.trim(),
       priority: newPoolPriority,
     };
-    setPoolItems((prev) => [newItem, ...prev]);
+    setMonthlyPools((prev) => ({
+      ...prev,
+      [currentMonthKey]: [newItem, ...(prev[currentMonthKey] || [])],
+    }));
     setNewPoolTitle('');
     setNewPoolDesc('');
     setNewPoolPriority('red');
@@ -274,7 +297,33 @@ export const ScheduleCalendar: React.FC<ScheduleCalendarProps> = ({ onOpenAuth }
 
   // 목록에서 항목 삭제
   const handleDeletePoolItem = (id: string) => {
-    setPoolItems((prev) => prev.filter((item) => item.id !== id));
+    setMonthlyPools((prev) => ({
+      ...prev,
+      [currentMonthKey]: (prev[currentMonthKey] || []).filter((item) => item.id !== id),
+    }));
+  };
+
+  // 이전 달 목록 불러오기 (비어있을 때 빠른 편의 기능)
+  const handleCopyFromPrevMonth = () => {
+    const prevMonthIndex = currentMonth === 0 ? 11 : currentMonth - 1;
+    const prevYearNum = currentMonth === 0 ? currentYear - 1 : currentYear;
+    const prevKey = `${prevYearNum}-${String(prevMonthIndex + 1).padStart(2, '0')}`;
+    const prevItems = monthlyPools[prevKey] || [];
+
+    if (prevItems.length === 0) {
+      alert(`${prevYearNum}년 ${prevMonthIndex + 1}월에 등록된 목록이 없습니다.`);
+      return;
+    }
+
+    const cloned = prevItems.map((item) => ({
+      ...item,
+      id: 'pool_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
+    }));
+
+    setMonthlyPools((prev) => ({
+      ...prev,
+      [currentMonthKey]: [...cloned, ...(prev[currentMonthKey] || [])],
+    }));
   };
 
   // 드래그 시작 핸들러 (목록 항목)
@@ -578,34 +627,49 @@ export const ScheduleCalendar: React.FC<ScheduleCalendarProps> = ({ onOpenAuth }
         </div>
       </div>
 
-      {/* 하단: "목록" 섹션 (드래그하여 달력으로 복사/중복 추가 가능) */}
+      {/* 하단: "목록" 섹션 (월별로 관리되며, 드래그하여 달력으로 복사/중복 추가 가능) */}
       <div className="pt-2">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
               <span>목록</span>
+              <span className="text-[11px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold">
+                {currentPoolItems.length}개
+              </span>
             </h3>
-            <span className="text-[11px] text-slate-500 dark:text-slate-400">
+            <span className="hidden sm:inline text-[11px] text-slate-500 dark:text-slate-400">
               (항목을 마우스로 잡고 달력 날짜 칸으로 드래그하면 원하는 날짜에 중복 추가됩니다)
             </span>
           </div>
 
-          <button
-            onClick={() => setIsPoolModalOpen(true)}
-            className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900/60 rounded-xl transition-colors border border-blue-200/60 dark:border-blue-800/60"
-          >
-            <Plus className="w-3.5 h-3.5" />
-            <span>목록 추가</span>
-          </button>
+          <div className="flex items-center gap-2">
+            {currentPoolItems.length === 0 && (
+              <button
+                type="button"
+                onClick={handleCopyFromPrevMonth}
+                className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium text-slate-600 dark:text-slate-300 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 rounded-xl transition-colors"
+                title="이전 달의 목록 항목들을 그대로 복사해옵니다"
+              >
+                <span>이전 달 목록 복사</span>
+              </button>
+            )}
+            <button
+              onClick={() => setIsPoolModalOpen(true)}
+              className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900/60 rounded-xl transition-colors border border-blue-200/60 dark:border-blue-800/60"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              <span>목록 추가</span>
+            </button>
+          </div>
         </div>
 
-        {poolItems.length === 0 ? (
-          <div className="p-4 text-center text-xs text-slate-400 dark:text-slate-500 bg-slate-50/60 dark:bg-slate-900/40 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
-            목록이 비어 있습니다. [목록 추가] 버튼을 눌러 자주 쓰는 일정을 등록해보세요!
+        {currentPoolItems.length === 0 ? (
+          <div className="p-5 text-center text-xs text-slate-400 dark:text-slate-500 bg-slate-50/60 dark:bg-slate-900/40 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center gap-2">
+            <div>이번 달 등록된 목록이 없습니다. [목록 추가]로 새 항목을 만들거나 [이전 달 목록 복사]를 이용해보세요!</div>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
-            {poolItems.map((item) => (
+            {currentPoolItems.map((item) => (
               <div
                 key={item.id}
                 draggable
