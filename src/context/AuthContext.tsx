@@ -11,6 +11,24 @@ import { auth, googleProvider, isFirebaseConfigured } from '../firebase/config';
 import { UserProfile } from '../types';
 
 export const ADMIN_EMAIL = 'uchoe59@gmail.com';
+export const GOOGLE_CLIENT_ID = '66680525613-mc1vtubqde9mvvdv5akorcdd3qmmk205.apps.googleusercontent.com';
+
+export const parseJwt = (token: string) => {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join('')
+    );
+    return JSON.parse(jsonPayload);
+  } catch (e) {
+    console.error('Failed to parse JWT token:', e);
+    return null;
+  }
+};
 
 interface AuthContextType {
   currentUser: UserProfile | null;
@@ -19,6 +37,7 @@ interface AuthContextType {
   loginWithEmail: (email: string, pass: string) => Promise<void>;
   signupWithEmail: (email: string, pass: string, name: string) => Promise<void>;
   loginWithGoogle: () => Promise<void>;
+  loginWithGoogleCredential: (payload: { email: string; name?: string; picture?: string; sub: string }) => void;
   loginAsGuest: (name?: string) => void;
   logout: () => Promise<void>;
   isFirebaseMode: boolean;
@@ -69,6 +88,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setLoading(false);
     }
   }, []);
+
+  const loginWithGoogleCredential = (payload: { email: string; name?: string; picture?: string; sub: string }) => {
+    const isOwnerLogin = payload.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+    const user: UserProfile = {
+      uid: 'google_' + payload.sub,
+      email: payload.email,
+      displayName: payload.name || (isOwnerLogin ? '최우혁 (본인 인증)' : payload.email.split('@')[0]),
+      photoURL: payload.picture,
+    };
+    localStorage.setItem('profile_user_session', JSON.stringify(user));
+    setCurrentUser(user);
+  };
 
   const loginWithEmail = async (email: string, pass: string) => {
     if (isFirebaseConfigured && auth) {
@@ -196,6 +227,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         loginWithEmail,
         signupWithEmail,
         loginWithGoogle,
+        loginWithGoogleCredential,
         loginAsGuest,
         logout,
         isFirebaseMode: isFirebaseConfigured,

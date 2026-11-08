@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X, Lock, Mail, User, ShieldCheck, Sparkles } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth, GOOGLE_CLIENT_ID, parseJwt, ADMIN_EMAIL } from '../context/AuthContext';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -8,13 +8,68 @@ interface AuthModalProps {
 }
 
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
-  const { loginWithEmail, signupWithEmail, loginAsGuest } = useAuth();
+  const { loginWithEmail, signupWithEmail, loginWithGoogleCredential, loginAsGuest } = useAuth();
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const googleBtnRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const renderGoogleBtn = () => {
+      if ((window as any).google?.accounts?.id && googleBtnRef.current) {
+        try {
+          (window as any).google.accounts.id.initialize({
+            client_id: GOOGLE_CLIENT_ID,
+            callback: (response: any) => {
+              if (response?.credential) {
+                const payload = parseJwt(response.credential);
+                if (payload?.email) {
+                  loginWithGoogleCredential({
+                    email: payload.email,
+                    name: payload.name,
+                    picture: payload.picture,
+                    sub: payload.sub,
+                  });
+                  onClose();
+                } else {
+                  setError('구글 계정 정보를 읽어오지 못했습니다.');
+                }
+              }
+            },
+          });
+
+          googleBtnRef.current.innerHTML = '';
+          (window as any).google.accounts.id.renderButton(googleBtnRef.current, {
+            theme: 'outline',
+            size: 'large',
+            width: 320,
+            text: 'continue_with',
+            shape: 'rectangular',
+            locale: 'ko',
+          });
+        } catch (err) {
+          console.error('Google button render error:', err);
+        }
+      }
+    };
+
+    if ((window as any).google?.accounts?.id) {
+      renderGoogleBtn();
+    } else {
+      const interval = setInterval(() => {
+        if ((window as any).google?.accounts?.id) {
+          clearInterval(interval);
+          renderGoogleBtn();
+        }
+      }, 200);
+      return () => clearInterval(interval);
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -61,7 +116,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           <X className="w-5 h-5" />
         </button>
 
-        <div className="text-center mb-6">
+        <div className="text-center mb-5">
           <div className="w-11 h-11 mx-auto rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-lg shadow-blue-500/20 mb-3">
             <ShieldCheck className="w-6 h-6" />
           </div>
@@ -78,6 +133,23 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             {error}
           </div>
         )}
+
+        {/* 실제 공식 Google 로그인 연동 버튼 */}
+        <div className="flex flex-col items-center justify-center my-3">
+          <div ref={googleBtnRef} className="min-h-[44px] flex items-center justify-center w-full"></div>
+          <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1.5 text-center">
+            {ADMIN_EMAIL} 계정 로그인 시 합격증 원본 즉시 열람 가능
+          </p>
+        </div>
+
+        <div className="relative my-4 text-center">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-slate-200 dark:border-slate-700"></div>
+          </div>
+          <span className="relative px-2 bg-white dark:bg-[#131B2E] text-[10px] font-semibold text-slate-400">
+            또는 이메일 / 비밀번호로 로그인
+          </span>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-3">
           {isSignUp && (
@@ -100,9 +172,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
           )}
 
           <div>
-            <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300 mb-1">
-              이메일 주소
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label className="block text-[11px] font-bold text-slate-600 dark:text-slate-300">
+                이메일 주소
+              </label>
+              {!isSignUp && (
+                <button
+                  type="button"
+                  onClick={() => setEmail(ADMIN_EMAIL)}
+                  className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold hover:underline"
+                >
+                  본인 계정 입력
+                </button>
+              )}
+            </div>
             <div className="relative">
               <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
               <input
@@ -125,7 +208,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
               <input
                 type="password"
                 required
-                minLength={6}
+                minLength={4}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
@@ -139,31 +222,22 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             disabled={loading}
             className="w-full py-2.5 mt-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow-md shadow-blue-500/20 transition-all disabled:opacity-50"
           >
-            {loading ? '처리 중...' : isSignUp ? '회원가입 완료' : '로그인'}
+            {loading ? '처리 중...' : isSignUp ? '회원가입 완료' : '이메일로 로그인'}
           </button>
         </form>
 
-        <div className="relative my-4 text-center">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-slate-200 dark:border-slate-700"></div>
-          </div>
-          <span className="relative px-2 bg-white dark:bg-[#131B2E] text-[10px] font-semibold text-slate-400">
-            방문자 빠른 둘러보기
-          </span>
-        </div>
-
-        <div>
+        <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800">
           <button
             type="button"
             onClick={handleGuest}
-            className="w-full py-2.5 px-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 flex items-center justify-center gap-1.5 transition-colors"
+            className="w-full py-2 px-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 flex items-center justify-center gap-1.5 transition-colors"
           >
             <Sparkles className="w-3.5 h-3.5 text-amber-500" />
             <span>방문자 게스트 입장 (서류 열람 제외)</span>
           </button>
         </div>
 
-        <div className="mt-5 text-center">
+        <div className="mt-4 text-center">
           <button
             type="button"
             onClick={() => {
