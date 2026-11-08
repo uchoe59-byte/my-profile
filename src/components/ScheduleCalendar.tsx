@@ -563,13 +563,13 @@ export const ScheduleCalendar: React.FC<ScheduleCalendarProps> = ({ onOpenAuth }
                   setDragOverDate(null);
                 }}
                 onDrop={(e) => handleDropOnDate(e, dateStr)}
-                className={`min-h-[90px] sm:min-h-[105px] p-1.5 cursor-pointer transition-all flex flex-col justify-between group relative ${
+                className={`min-h-[90px] sm:min-h-[105px] p-1.5 cursor-pointer transition-colors flex flex-col justify-start gap-1 group relative ${
                   isHovered
-                    ? 'bg-blue-100 dark:bg-blue-950/80 ring-2 ring-blue-500 z-10 scale-[1.02]'
+                    ? 'bg-blue-100 dark:bg-blue-950/80 ring-2 ring-blue-500 z-10'
                     : 'bg-white dark:bg-[#131B2E] hover:bg-blue-50/40 dark:hover:bg-slate-800/60'
                 }`}
               >
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between shrink-0">
                   <span
                     className={`text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full ${
                       isToday
@@ -594,15 +594,15 @@ export const ScheduleCalendar: React.FC<ScheduleCalendarProps> = ({ onOpenAuth }
                   )}
                 </div>
 
-                {/* 해당 날짜의 일정 칩 표시 (클릭 수정 & 달력 간 드래그도 지원) */}
-                <div className="space-y-1 mt-1 overflow-y-auto max-h-[64px] scrollbar-none">
+                {/* 해당 날짜의 일정 칩 표시 (마우스 호버 시 흔들림 없도록 완전히 고정) */}
+                <div className="space-y-1 w-full overflow-y-auto max-h-[70px] scrollbar-none">
                   {dayEvents.map((ev) => (
                     <div
                       key={ev.id}
                       draggable
                       onDragStart={(e) => handleDragStart(e, ev)}
                       onClick={(e) => handleEventClick(e, ev)}
-                      className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md truncate transition-transform hover:scale-[1.02] shadow-sm cursor-grab active:cursor-grabbing ${getPriorityStyle(
+                      className={`text-[10px] font-bold px-1.5 py-0.5 rounded-md truncate shadow-sm cursor-grab active:cursor-grabbing hover:opacity-90 select-none block w-full ${getPriorityStyle(
                         ev.priority
                       )}`}
                       title={`${ev.title}${ev.description ? ` - ${ev.description}` : ''} (클릭하여 수정 / 드래그하여 다른 날짜 복사)`}
@@ -674,7 +674,7 @@ export const ScheduleCalendar: React.FC<ScheduleCalendarProps> = ({ onOpenAuth }
                 key={item.id}
                 draggable
                 onDragStart={(e) => handleDragStart(e, item)}
-                className={`p-3 rounded-2xl cursor-grab active:cursor-grabbing hover:shadow-md transition-all flex items-center justify-between gap-2.5 select-none ${getPriorityStyle(
+                className={`p-3 rounded-2xl cursor-grab active:cursor-grabbing hover:shadow-md transition-shadow flex items-center justify-between gap-2.5 select-none ${getPriorityStyle(
                   item.priority
                 )}`}
                 title="마우스로 드래그하여 달력의 날짜 칸에 놓으세요!"
