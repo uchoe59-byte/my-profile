@@ -294,7 +294,7 @@ export const ProfileSidebar: React.FC<ProfileSidebarProps> = ({ onOpenAuth }) =>
                 className="w-full py-2.5 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-md shadow-blue-500/20 transition-all"
               >
                 <LogIn className="w-4 h-4" />
-                <span>Google 본인 인증 로그인하기</span>
+                <span>본인 인증 로그인하기</span>
               </button>
 
               <button
