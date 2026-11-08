@@ -266,7 +266,7 @@ export const ScheduleCalendar: React.FC<ScheduleCalendarProps> = ({ onOpenAuth }
             <span className="p-1.5 bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 rounded-lg">
               <CalendarDays className="w-4 h-4" />
             </span>
-            목표 및 일정 캘린더 (2026 ~ 2030)
+            일정
           </h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
             날짜를 클릭하여 일정을 등록하고 중요도별(빨강·파랑·초록) 테두리로 관리하세요.
