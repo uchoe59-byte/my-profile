@@ -161,24 +161,6 @@ export const Timeline: React.FC = () => {
                 </a>
               </div>
             </div>
-
-            <div className="flex flex-wrap gap-1.5">
-              <span className="px-2 py-0.5 text-[10px] font-medium bg-amber-100/60 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 rounded border border-amber-200/50 dark:border-amber-800/40">
-                #공모전대상
-              </span>
-              <span className="px-2 py-0.5 text-[10px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded">
-                #생성형AI응용
-              </span>
-              <span className="px-2 py-0.5 text-[10px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded">
-                #AI콘텐츠기획
-              </span>
-              <span className="px-2 py-0.5 text-[10px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded">
-                #창의적문제해결
-              </span>
-              <span className="px-2 py-0.5 text-[10px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded">
-                #추진력
-              </span>
-            </div>
           </div>
         </div>
 
@@ -316,24 +298,6 @@ export const Timeline: React.FC = () => {
                 ))}
               </div>
             </div>
-
-            <div className="flex flex-wrap gap-1.5">
-              <span className="px-2 py-0.5 text-[10px] font-medium bg-blue-100 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 rounded border border-blue-200/50 dark:border-blue-900/40">
-                #서포터즈대상수상
-              </span>
-              <span className="px-2 py-0.5 text-[10px] font-medium bg-red-100 dark:bg-red-950/60 text-red-700 dark:text-red-300 rounded border border-red-200/50 dark:border-red-900/40">
-                #캠코공식유튜브게시
-              </span>
-              <span className="px-2 py-0.5 text-[10px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded">
-                #정책홍보
-              </span>
-              <span className="px-2 py-0.5 text-[10px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded">
-                #데이터시각화
-              </span>
-              <span className="px-2 py-0.5 text-[10px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded">
-                #영상기획
-              </span>
-            </div>
           </div>
         </div>
 
@@ -385,21 +349,6 @@ export const Timeline: React.FC = () => {
                   시각화 리포트 구성
                 </span>
               </div>
-            </div>
-
-            <div className="flex flex-wrap gap-1.5">
-              <span className="px-2 py-0.5 text-[10px] font-medium bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 rounded">
-                #데이터분석
-              </span>
-              <span className="px-2 py-0.5 text-[10px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded">
-                #지표설계
-              </span>
-              <span className="px-2 py-0.5 text-[10px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded">
-                #데이터시각화
-              </span>
-              <span className="px-2 py-0.5 text-[10px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded">
-                #프레젠테이션
-              </span>
             </div>
           </div>
         </div>

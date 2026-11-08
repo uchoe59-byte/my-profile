@@ -99,12 +99,12 @@ export const ProfileSidebar: React.FC<ProfileSidebarProps> = ({ onOpenAuth }) =>
         <div className="h-24 bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-500 -mx-6 -mt-6 mb-4"></div>
 
         <div className="relative flex flex-col items-center text-center">
-          {/* 메인 프로필 사진 */}
-          <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-2xl sm:rounded-3xl border-4 border-white dark:border-slate-800 shadow-xl bg-slate-100 dark:bg-slate-800 -mt-16 overflow-hidden flex items-center justify-center">
+          {/* 메인 프로필 사진 (정사각형 1:1 프레임) */}
+          <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-2xl sm:rounded-3xl border-4 border-white dark:border-slate-800 shadow-xl bg-white dark:bg-slate-900 -mt-14 sm:-mt-16 mb-2 overflow-hidden flex items-center justify-center">
             <img
               src="/profile.png"
-              alt="최우혁"
-              className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
+              alt="최우혁 프로필 사진"
+              className="w-full h-full object-cover"
             />
           </div>
 
@@ -233,9 +233,6 @@ export const ProfileSidebar: React.FC<ProfileSidebarProps> = ({ onOpenAuth }) =>
                     인증필요
                   </span>
                 )}
-                <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${cert.tagColor}`}>
-                  {cert.tag}
-                </span>
               </div>
             </button>
           ))}
